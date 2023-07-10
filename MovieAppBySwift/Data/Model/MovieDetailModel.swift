@@ -95,7 +95,7 @@ class MovieDetailModelImpl: BaseModel, MovieDetailModel {
                 if let item = item {
                     completion(.success(item))
                 } else {
-                    completion(.failure("Failed to get detail with id \(id)"))
+                    completion(.failure("Failed to get series detail with id \(id)"))
                 }
             }
         }

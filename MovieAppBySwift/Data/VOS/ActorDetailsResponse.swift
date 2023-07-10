@@ -54,5 +54,26 @@ struct ActorDetailsResponse: Codable {
         entity.placeOfBirth = placeOfBirth
         return entity
     }
+    
+    func toActorObject() -> ActorObject {
+        let object = ActorObject()
+        object.id = id!
+        object.name = name
+        object.placeOfBirth = placeOfBirth
+        object.birthday = birthday
+        object.biography = biography
+        object.deathday = deathday
+        object.knownForDepartment = knownForDepartment
+        object.popularity = popularity
+        object.imdbID = imdbID
+        object.homePage = homepage ?? ""
+        object.profilePath = profilePath
+        object.adult = adult
+        object.gender = gender
+        object.alsoKnownAs = alsoKnownAs.map({
+            $0
+        })?.joined(separator: ",")
+        return object
+    }
 }
 

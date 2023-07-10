@@ -8,8 +8,14 @@
 import Foundation
 import RealmSwift
 
-class MovieDBRealm: NSObject {
+class MovieDBRealm {
     
-    static let shared = try! Realm()
+    static let shared = MovieDBRealm()
+    let realm = try! Realm()
+    
+    private init() {
+        print("Realm Default is at \(realm.configuration.fileURL?.absoluteString ?? "undefined")")
+
+    }
     
 }

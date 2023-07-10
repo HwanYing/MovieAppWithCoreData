@@ -42,7 +42,7 @@ struct MovieCast: Codable {
     }
     
     @discardableResult
-    func toActorEntity(context: NSManagedObjectContext, movieId: Int, groupType: BelongsToTypeEntity) -> ActorEntity {
+    func toActorEntity(context: NSManagedObjectContext, movieId: Int) -> ActorEntity {
         let entity = ActorEntity(context: context)
         entity.id = Int32(id!)
         entity.name = name
@@ -52,7 +52,19 @@ struct MovieCast: Codable {
         entity.knownForDepartment = knownForDepartment
         entity.adult = adult!
         entity.gender = Int32(gender!)
-    
+        entity.movieID = String(movieId)
         return entity
+    }
+    
+    func convertToActorInfoResponse() -> ActorInfoResponse {
+        return ActorInfoResponse(
+            adult: adult,
+            gender: gender,
+            id: id,
+            knownFor: [KnownFor(adult: adult, backdropPath: "", genreIDS: [], id: id, mediaType: MediaType.movie, originalLanguage: "", originalTitle: "", overview: "", posterPath: profilePath, releaseDate: "", title: "", video: false, voteAverage: 0.0, voteCount: 0, firstAirDate: "", name: name, originCountry: [], originalName: originalName)],
+            knownForDepartment: knownForDepartment,
+            name: name,
+            popularity: popularity,
+            profilePath: profilePath)
     }
 }

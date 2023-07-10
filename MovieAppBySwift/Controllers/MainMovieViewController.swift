@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainMovieViewController: UIViewController, ActorActionDelegate {
+class MainMovieViewController: UIViewController {
    
     //MARK: - IBOutlet
     @IBOutlet var movieListTableView: UITableView!
@@ -68,9 +68,9 @@ class MainMovieViewController: UIViewController, ActorActionDelegate {
         navigateToSearchMovieVC()
     }
     
-    func onTapActorImage(actorId: Int) {
-        navigateToActorDetailsViewController(actorId: actorId)
-    }
+//    func onTapActorImage(actorId: Int) {
+//        navigateToActorDetailsViewController(actorId: actorId)
+//    }
   
     //MARK: - API Methods
     // upcoming movie

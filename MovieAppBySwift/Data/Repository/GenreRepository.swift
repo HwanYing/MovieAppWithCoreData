@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import RealmSwift
 
 protocol GenreRepository {
     func get(completion: @escaping ([MovieGenre]) -> Void)
@@ -22,30 +23,52 @@ class GenreRepositoryImpl: BaseRepository, GenreRepository {
     }
     
     func get(completion: @escaping ([MovieGenre]) -> Void) {
-        let fetchRequest: NSFetchRequest<GenreEntity> = GenreEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [
-        NSSortDescriptor(key: "name", ascending: true)
-        ]
         
-        do {
-            let results: [GenreEntity] = try coreData.context.fetch(fetchRequest)
-            let items = results.map {
-                GenreEntity.toMovieGenre(entity: $0)
+        let items: [MovieGenre] = realmInstance.realm.objects(GenreObject.self)
+            .sorted(byKeyPath: "name", ascending: true)
+            .map {
+                $0.toMovieGenre()
             }
-            completion(items)
-        } catch {
-            completion([MovieGenre]())
-            print("\(#function) \(error.localizedDescription)")
-        }
+        
+        completion(items)
+        
+        
+//        let fetchRequest: NSFetchRequest<GenreEntity> = GenreEntity.fetchRequest()
+//        fetchRequest.sortDescriptors = [
+//        NSSortDescriptor(key: "name", ascending: true)
+//        ]
+//
+//        do {
+//            let results: [GenreEntity] = try coreData.context.fetch(fetchRequest)
+//            let items = results.map {
+//                GenreEntity.toMovieGenre(entity: $0)
+//            }
+//            completion(items)
+//        } catch {
+//            completion([MovieGenre]())
+//            print("\(#function) \(error.localizedDescription)")
+//        }
     }
     
     func save(data: MovieGenreList) {
-        let _ = data.genres.map {
-            let entity = GenreEntity(context: coreData.context)
-            entity.id = String($0.id)
-            entity.name = $0.name
-            return
+        
+        let objects = List<GenreObject>()
+        data.genres.map {
+            $0.toGenreObject()
+        }.forEach {
+            objects.append($0)
         }
-        coreData.saveContext()
+        
+        try! realmInstance.realm.write({
+            realmInstance.realm.add(objects, update: .modified)
+        })
+        
+//        let _ = data.genres.map {
+//            let entity = GenreEntity(context: coreData.context)
+//            entity.id = String($0.id)
+//            entity.name = $0.name
+//            return
+//        }
+//        coreData.saveContext()
     }
 }

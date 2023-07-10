@@ -388,8 +388,8 @@ extension DetailsViewController: UICollectionViewDelegateFlowLayout {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == collectionViewActors {
-            let item = actorData?.cast?[indexPath.row]
-            self.onTapActorImage(actorId: item?.id ?? 0)
+            let item = actorList[indexPath.row]
+            self.onTapActorImage(actorId: item.id ?? 0)
         }
         if collectionView == similarMovieCollectionView {
             let item = similarMovieList[indexPath.row]

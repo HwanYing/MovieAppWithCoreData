@@ -55,5 +55,12 @@ public struct MovieGenre : Codable, Hashable {
         let vo = GenreVO(id: id, name: name, isSelected: false)
         return vo
     }
+
+    func toGenreObject() -> GenreObject {
+        let object = GenreObject()
+        object.id = id
+        object.name = name
+        return object
+    }
 }
 

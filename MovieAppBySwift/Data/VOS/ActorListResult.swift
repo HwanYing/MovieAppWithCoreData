@@ -53,6 +53,20 @@ struct ActorInfoResponse: Codable {
         entity.profilePath = profilePath
         return entity
     }
+    
+    
+    func toActorObject(contentTypeRepo: ContentTypeRepository) -> ActorObject  {
+        let object = ActorObject()
+        object.id = Int(id!)
+        object.name = name
+        object.profilePath = profilePath
+        object.adult = adult
+        object.gender = gender
+        object.popularity = popularity
+        object.knownForDepartment = knownForDepartment
+        
+        return object
+    }
 }
 
 // MARK: - KnownFor

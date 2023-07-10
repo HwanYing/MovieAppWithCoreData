@@ -81,7 +81,7 @@ class MovieObject: Object {
     
     @Persisted
     var voteCount: Int?
-    
+        
     @Persisted
     var belongsToCollection: BelongsToCollectionObject?
     
@@ -165,4 +165,5 @@ class MovieObject: Object {
             voteAverage: voteAverage,
             voteCount: voteCount)
     }
+   
 }

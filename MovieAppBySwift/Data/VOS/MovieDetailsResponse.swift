@@ -73,6 +73,29 @@ public struct MovieDetailsResponse: Codable {
         entity.voteCount = Int64(voteCount ?? 0)
         return entity
     }
+    
+    func toMovieObject() -> MovieObject {
+        let object = MovieObject()
+        // Fatal error: Unexpectedly found nil while unwrapping an Optional value
+        object.id = id!
+        object.adult = adult ?? false
+        object.backdropPath = backdropPath
+        object.genreIDs = genres?.map({
+            String($0.id)
+        }).joined(separator: ",")
+        object.originalLanguage = originalLanguage
+        object.originalName = originalTitle
+        object.originalTitle = originalTitle
+        object.overview = overview
+        object.popularity = popularity ?? 0
+        object.posterPath = posterPath
+        object.releaseDate = releaseDate ?? ""
+        object.title = title
+        object.video = video ?? false
+        object.voteAverage = voteAverage ?? 0
+        object.voteCount = voteCount
+        return object
+    }
 }
 
 // MARK: - BelongsToCollection

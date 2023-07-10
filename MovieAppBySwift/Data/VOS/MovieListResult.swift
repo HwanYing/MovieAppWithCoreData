@@ -56,7 +56,7 @@ struct MovieResult: Codable, Hashable {
     }
     
     @discardableResult
-    func toMovieEntity(context: NSManagedObjectContext, groupType: BelongsToTypeEntity) -> MovieEntity {
+    func toMovieEntity(context: NSManagedObjectContext, groupType: BelongsToTypeEntity, similarId: String) -> MovieEntity {
         let entity = MovieEntity(context: context)
         entity.id = Int32(id!)
         entity.adult = adult ?? false
@@ -75,8 +75,31 @@ struct MovieResult: Codable, Hashable {
         entity.video = video ?? false
         entity.voteAverage = voteAverage ?? 0
         entity.voteCount = Int64(voteCount ?? 0)
+        entity.similarId = similarId
         entity.addToBelongsToType(groupType)
         return entity
+    }
+    
+    func toMovieObject(groupType: BelongsToTypeObject) -> MovieObject {
+        let object = MovieObject()
+        object.id = id!
+        object.adult = adult ?? false
+        object.backdropPath = backdropPath
+        object.genreIDs = genreIDS?.map({
+            String($0)
+        }).joined(separator: ",")
+        object.originalLanguage = originalLanguage
+        object.originalName = originalName
+        object.originalTitle = originalTitle
+        object.overview = overview
+        object.popularity = popularity ?? 0
+        object.posterPath = posterPath
+        object.releaseDate = releaseDate ?? ""
+        object.title = title
+        object.video = video ?? false
+        object.voteAverage = voteAverage ?? 0
+        object.voteCount = voteCount
+        return object
     }
 }
 

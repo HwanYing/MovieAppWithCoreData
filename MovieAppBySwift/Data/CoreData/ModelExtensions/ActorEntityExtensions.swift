@@ -37,4 +37,24 @@ extension ActorEntity {
             department: entity.birthday,
             job: entity.alsoKnownAs)
     }
+    
+    static func toActorDetailsResponse(entity: ActorEntity) -> ActorDetailsResponse {
+        return ActorDetailsResponse(
+            adult: entity.adult,
+            alsoKnownAs: entity.alsoKnownAs.map({
+                $0
+            })?.components(separatedBy: ","),
+            biography: entity.biography,
+            birthday: entity.birthday,
+            deathday: entity.deathday,
+            gender: Int(entity.gender),
+            homepage: entity.homePage,
+            id: Int(entity.id),
+            imdbID: entity.imdbID,
+            knownForDepartment: entity.knownForDepartment,
+            name: entity.name,
+            placeOfBirth: entity.placeOfBirth,
+            popularity: entity.popularity,
+            profilePath: entity.profilePath)
+    }
 }
