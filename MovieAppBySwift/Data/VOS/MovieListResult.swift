@@ -99,7 +99,9 @@ struct MovieResult: Codable, Hashable {
         object.video = video ?? false
         object.voteAverage = voteAverage ?? 0
         object.voteCount = voteCount
+        object.belongsToType.append(groupType)
         return object
+    
     }
 }
 

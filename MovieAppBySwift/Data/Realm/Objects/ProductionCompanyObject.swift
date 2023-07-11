@@ -21,7 +21,7 @@ class ProductionCompanyObject: Object {
     
     @Persisted
     var originalCountry: String?
-    
+        
     func toProductionCompany() -> ProductionCompany {
         ProductionCompany(id: id, logoPath: logoPath, name: name, originCountry: originalCountry)
     }

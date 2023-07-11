@@ -13,7 +13,6 @@ class BelongsToCollectionObject: Object {
     @Persisted(primaryKey: true)
     var id: Int
     
-    
     @Persisted
     var name: String?
     
@@ -22,7 +21,7 @@ class BelongsToCollectionObject: Object {
     
     @Persisted
     var backdropPath: String?
-    
+        
     func toBelongsToCollection() -> BelongsToCollection {
         BelongsToCollection(id: id,
                             name: name,

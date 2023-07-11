@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import RealmSwift
 
 // MARK: - MovieDetailsResponse
 public struct MovieDetailsResponse: Codable {
@@ -71,6 +72,10 @@ public struct MovieDetailsResponse: Codable {
         entity.video = video ?? false
         entity.voteAverage = voteAverage ?? 0
         entity.voteCount = Int64(voteCount ?? 0)
+        entity.productionCountries?.addingObjects(from: productionCountries!)
+        entity.productionCompany?.addingObjects(from: productionCompanies!)
+        entity.spokenLanguage?.addingObjects(from: spokenLanguages!)
+        entity.genres?.addingObjects(from: genres!)
         return entity
     }
     
@@ -90,6 +95,19 @@ public struct MovieDetailsResponse: Codable {
         object.popularity = popularity ?? 0
         object.posterPath = posterPath
         object.releaseDate = releaseDate ?? ""
+        object.productionCompany.append(objectsIn: productionCompanies!.compactMap({
+            $0.toProductionCompanyObject()
+        }))
+        object.productionCountries.append(objectsIn: productionCountries!.compactMap({
+            $0.toProductionCountryObject()
+        }))
+        object.spokenLanguage.append(objectsIn: spokenLanguages!.compactMap({
+            $0.toSpokenLanguageObject()
+        }))
+        object.belongsToCollection = belongsToCollection?.toBelongsToCollectionObject()
+        object.genres.append(objectsIn: genres!.compactMap({
+            $0.toGenreObject()
+        }))
         object.title = title
         object.video = video ?? false
         object.voteAverage = voteAverage ?? 0
@@ -108,6 +126,25 @@ public struct BelongsToCollection: Codable {
         case posterPath = "poster_path"
         case backdropPath = "backdrop_path"
     }
+    
+    func toBelongsToCollectionObject() -> BelongsToCollectionObject {
+        let object = BelongsToCollectionObject()
+        object.id = id!
+        object.name = name
+        object.posterPath = posterPath
+        object.backdropPath = backdropPath
+        return object
+    }
+    
+    @discardableResult
+    func toBelongsToCollectionEntity() -> BelongsToCollectionEntity {
+        let entity = BelongsToCollectionEntity()
+        entity.id = Int32(id!)
+        entity.name = name
+        entity.posterPath = posterPath
+        entity.backdropPath = backdropPath
+        return entity
+    }
 }
 
 // MARK: - ProductionCompany
@@ -122,6 +159,25 @@ public struct ProductionCompany: Codable, Hashable {
         case name
         case originCountry = "origin_country"
     }
+    
+    func toProductionCompanyObject() -> ProductionCompanyObject {
+        let object = ProductionCompanyObject()
+        object.id = id!
+        object.name = name
+        object.originalCountry = originCountry
+        object.logoPath = logoPath
+        return object
+    }
+    
+    @discardableResult
+    func toProductionCompanyEntity() -> ProductionCompanyEntity {
+        let entity = ProductionCompanyEntity()
+        entity.id = Int32(id!)
+        entity.name = name
+        entity.originalCountry = originCountry
+        entity.logoPath = logoPath
+        return entity
+    }
 }
 
 // MARK: - ProductionCountry
@@ -131,6 +187,21 @@ public struct ProductionCountry: Codable, Hashable {
     enum CodingKeys: String, CodingKey {
         case iso3166_1 = "iso_3166_1"
         case name
+    }
+    
+    func toProductionCountryObject() -> ProductionCountryObject {
+        let object = ProductionCountryObject()
+        object.name = name
+        object.iso3166_1 = iso3166_1
+        return object
+    }
+    
+    @discardableResult
+    func toProductionCountryEntity() -> ProductionCountryEntity {
+        let entity = ProductionCountryEntity()
+        entity.name = name
+        entity.iso3166_1 = iso3166_1
+        return entity
     }
 }
 
@@ -142,5 +213,22 @@ public struct SpokenLanguage: Codable, Hashable {
         case englishName = "english_name"
         case iso639_1 = "iso_639_1"
         case name
+    }
+    
+    func toSpokenLanguageObject() -> SpokenLanguageObject {
+        let object = SpokenLanguageObject()
+        object.englishName = englishName
+        object.iso639_1 = iso639_1
+        object.name = name
+        return object
+    }
+    
+    @discardableResult
+    func toSpokenLanguageEntity() -> SpokenLanguageEntity {
+        let entity = SpokenLanguageEntity()
+        entity.englishName = englishName
+        entity.iso639_1 = iso639_1
+        entity.name = name
+        return entity
     }
 }

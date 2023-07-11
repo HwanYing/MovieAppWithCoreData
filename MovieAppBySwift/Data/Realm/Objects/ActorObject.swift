@@ -54,7 +54,7 @@ class ActorObject: Object {
     
     @Persisted
     var profilePath: String?
-    
+        
     func toActorDetailsResponse() -> ActorDetailsResponse {
         return ActorDetailsResponse(
             adult: adult,

@@ -15,7 +15,7 @@ class ProductionCountryObject: Object {
     
     @Persisted(primaryKey: true)
     var name: String?
-        
+            
     func toProductionCountry() -> ProductionCountry {
         ProductionCountry(iso3166_1: iso3166_1, name: name)
     }

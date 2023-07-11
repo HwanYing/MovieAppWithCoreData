@@ -18,7 +18,7 @@ class SpokenLanguageObject: Object {
     
     @Persisted
     var englishName: String?
-    
+        
     func toSpokenLanguage() -> SpokenLanguage {
         SpokenLanguage(englishName: englishName, iso639_1: iso639_1, name: name)
     }

@@ -62,5 +62,13 @@ public struct MovieGenre : Codable, Hashable {
         object.name = name
         return object
     }
+    
+    @discardableResult
+    func toGenreEntity() -> GenreEntity {
+        let entity = GenreEntity()
+        entity.id = String(id)
+        entity.name = name
+        return entity
+    }
 }
 
